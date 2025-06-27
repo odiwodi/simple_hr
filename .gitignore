@@ -5,3 +5,8 @@ config/database.yml
 !/tmp/.keep
 .byebug_history
 .ruby-version
+/public/assets/
+.ssh/
+.bash_history
+.irb_history
+.viminfo
