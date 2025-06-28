@@ -118,6 +118,9 @@ ActiveAdmin.register Employee do
                 column :full_name
                 column :relationship
                 column :birth_date
+                column :age do |family|
+                  family.age
+                end
                 column :gender do |family|
                   family.gender&.name
                 end
