@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  severity_level: MyString
+  default_sanction: MyString
+  number_of_offenses_strike: 1
+  status: MyString
+
+two:
+  name: MyString
+  description: MyText
+  severity_level: MyString
+  default_sanction: MyString
+  number_of_offenses_strike: 1
+  status: MyString

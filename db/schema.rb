@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_042236) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_28_043459) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -42,6 +42,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_042236) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_genders_on_name", unique: true
+  end
+
+  create_table "violations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "severity_level"
+    t.string "default_sanction"
+    t.integer "number_of_offenses_strike"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_violations_on_name", unique: true
+    t.index ["status"], name: "index_violations_on_status"
   end
 
 end
