@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_065001) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_28_065845) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -54,6 +54,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_065001) do
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_departments_on_code", unique: true
     t.index ["name"], name: "index_departments_on_name", unique: true
+  end
+
+  create_table "designations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "department_id"
+    t.bigint "job_level_id"
+    t.string "payroll_cost_center"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id", "name"], name: "index_designations_on_department_id_and_name", unique: true
+    t.index ["department_id"], name: "index_designations_on_department_id"
+    t.index ["job_level_id"], name: "index_designations_on_job_level_id"
   end
 
   create_table "employee_grades", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -130,5 +142,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_065001) do
   end
 
   add_foreign_key "admin_users", "roles"
+  add_foreign_key "designations", "departments"
+  add_foreign_key "designations", "job_levels"
   add_foreign_key "employee_grades", "job_levels"
 end
