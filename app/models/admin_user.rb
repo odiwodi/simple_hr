@@ -7,6 +7,6 @@ class AdminUser < ApplicationRecord
   belongs_to :role, optional: true
 
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "email", "encrypted_password", "id", "id_value", "remember_created_at", "reset_password_sent_at", "reset_password_token", "updated_at"]
+    ["created_at", "email", "id", "id_value", "updated_at", "username", "first_name", "middle_name", "last_name", "role_id"]
   end
 end
