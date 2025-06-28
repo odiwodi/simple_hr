@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_050157) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_28_052227) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -33,8 +33,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_050157) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "username"
+    t.string "first_name"
+    t.string "middle_name"
+    t.string "last_name"
+    t.bigint "role_id"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_admin_users_on_role_id"
+    t.index ["username"], name: "index_admin_users_on_username", unique: true
   end
 
   create_table "genders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -77,4 +84,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_050157) do
     t.index ["status"], name: "index_violations_on_status"
   end
 
+  add_foreign_key "admin_users", "roles"
 end
