@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_101607) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_28_102506) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -139,6 +139,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_101607) do
     t.string "attendance_device_id"
     t.boolean "is_overtime_eligible", default: false, null: false
     t.bigint "leave_approver_id"
+    t.text "family_background"
+    t.text "health_details"
+    t.string "insurance"
     t.index ["assigned_shift_id"], name: "index_employees_on_assigned_shift_id"
     t.index ["date_of_joining"], name: "index_employees_on_date_of_joining"
     t.index ["department_id"], name: "index_employees_on_department_id"
