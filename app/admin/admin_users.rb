@@ -59,7 +59,7 @@ ActiveAdmin.register AdminUser do
 
   member_action :edit_password, method: :get do
     @admin_user = AdminUser.find(params[:id])
-    render 'admin/admin_users/edit_password', layout: false
+    render 'admin/admin_users/edit_password'
   end
 
   member_action :update_password, method: :patch do
