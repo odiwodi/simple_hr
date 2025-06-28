@@ -37,6 +37,20 @@ ActiveAdmin.register Shift do
       row(:time_out) { |shift| shift.time_out&.strftime("%H:%M") }
       row(:break_start_time) { |shift| shift.break_start_time&.strftime("%H:%M") }
       row(:break_end_time) { |shift| shift.break_end_time&.strftime("%H:%M") }
+      row(:shift_duration) do |shift|
+        duration = shift.shift_duration
+        if duration
+          hours = duration.div(60)
+          minutes = duration % 60
+          minutes = minutes.to_i # Remove decimal part if any
+          parts = []
+          parts << "#{hours} hours" if hours > 0
+          parts << "#{minutes} minutes" if minutes > 0
+          parts.empty? ? "-" : parts.join(" ")
+        else
+          "-"
+        end
+      end
       row :grace_period
       row :working_days
     end
