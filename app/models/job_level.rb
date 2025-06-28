@@ -1,4 +1,5 @@
 class JobLevel < ApplicationRecord
+  has_many :employee_grades
   validates :position_name, presence: true, uniqueness: true
   validates :position_code, presence: true, uniqueness: true
 
