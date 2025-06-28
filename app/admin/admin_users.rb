@@ -3,6 +3,10 @@ ActiveAdmin.register AdminUser do
   permit_params :email, :password, :password_confirmation, :first_name, :middle_name, :last_name, :username, :role_id
   actions :all, except: [:destroy]
 
+  filter :email
+  filter :username
+  filter :role, as: :select, collection: Role.all.map { |role| [role.name.humanize, role.id] }
+
   index do
     selectable_column
     id_column
@@ -18,9 +22,6 @@ ActiveAdmin.register AdminUser do
     column :created_at
     actions
   end
-
-  filter :email
-  filter :username
 
   show do
     attributes_table do

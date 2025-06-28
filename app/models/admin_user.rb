@@ -14,6 +14,10 @@ class AdminUser < ApplicationRecord
     ["created_at", "email", "id", "id_value", "updated_at", "username", "first_name", "middle_name", "last_name", "role_id"]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    ["role"]
+  end
+
   # Allow login via username or email
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

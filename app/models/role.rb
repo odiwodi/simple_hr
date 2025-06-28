@@ -1,4 +1,6 @@
 class Role < ApplicationRecord
+  has_many :admin_users
+  
   validates :name, presence: true, uniqueness: true
 
   def self.ransackable_attributes(auth_object = nil)
