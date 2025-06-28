@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_091346) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_28_092953) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -108,6 +108,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_091346) do
     t.string "company_email_address"
     t.string "current_address"
     t.string "permament_address"
+    t.bigint "assigned_shift_id"
+    t.string "attendance_device_id"
+    t.boolean "is_overtime_eligible", default: false, null: false
+    t.bigint "leave_approver_id"
+    t.index ["assigned_shift_id"], name: "index_employees_on_assigned_shift_id"
     t.index ["date_of_joining"], name: "index_employees_on_date_of_joining"
     t.index ["department_id"], name: "index_employees_on_department_id"
     t.index ["designation_id"], name: "index_employees_on_designation_id"
@@ -116,6 +121,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_091346) do
     t.index ["is_deleted"], name: "index_employees_on_is_deleted"
     t.index ["job_title"], name: "index_employees_on_job_title"
     t.index ["last_name"], name: "index_employees_on_last_name"
+    t.index ["leave_approver_id"], name: "index_employees_on_leave_approver_id"
     t.index ["middle_name"], name: "index_employees_on_middle_name"
   end
 
@@ -189,5 +195,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_091346) do
   add_foreign_key "emergency_contacts", "employees"
   add_foreign_key "employee_grades", "job_levels"
   add_foreign_key "employees", "departments"
+  add_foreign_key "employees", "employees", column: "leave_approver_id"
   add_foreign_key "employees", "genders"
+  add_foreign_key "employees", "shifts", column: "assigned_shift_id"
 end
