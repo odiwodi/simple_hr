@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_052227) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_28_055748) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -62,6 +62,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_052227) do
     t.index ["holiday_type"], name: "index_holidays_on_holiday_type"
     t.index ["is_recurring"], name: "index_holidays_on_is_recurring"
     t.index ["name"], name: "index_holidays_on_name"
+  end
+
+  create_table "job_levels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "position_name", null: false
+    t.string "position_code", null: false
+    t.integer "level_rank", default: 0, null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["position_code"], name: "index_job_levels_on_position_code", unique: true
+    t.index ["position_name"], name: "index_job_levels_on_position_name", unique: true
   end
 
   create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
