@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  time_in: 2025-06-28 14:21:02
+  time_out: 2025-06-28 14:21:02
+  break_start_time: 2025-06-28 14:21:02
+  break_end_time: 2025-06-28 14:21:02
+  grace_period: 1
+  working_days: 
+
+two:
+  name: MyString
+  time_in: 2025-06-28 14:21:02
+  time_out: 2025-06-28 14:21:02
+  break_start_time: 2025-06-28 14:21:02
+  break_end_time: 2025-06-28 14:21:02
+  grace_period: 1
+  working_days: 

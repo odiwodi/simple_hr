@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_060713) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_28_062102) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -89,6 +89,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_060713) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_roles_on_name", unique: true
+  end
+
+  create_table "shifts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.time "time_in"
+    t.time "time_out"
+    t.time "break_start_time"
+    t.time "break_end_time"
+    t.integer "grace_period"
+    t.json "working_days"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_shifts_on_name", unique: true
   end
 
   create_table "violations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
