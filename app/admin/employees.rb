@@ -3,6 +3,12 @@ ActiveAdmin.register Employee do
   permit_params :first_name, :middle_name, :last_name, :gender_id, :birth_date, :is_deleted,
                 :marital_status
   
+  filter :id
+  filter :last_name
+  filter :first_name
+  filter :middle_name
+  filter :marital_status, as: :select, collection: Employee.marital_statuses.invert
+
   index do
     selectable_column
     id_column
