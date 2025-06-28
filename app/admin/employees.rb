@@ -1,7 +1,8 @@
 ActiveAdmin.register Employee do
   menu priority: 2
   permit_params :first_name, :middle_name, :last_name, :gender_id, :birth_date, :is_deleted,
-                :marital_status
+                :marital_status, :date_of_joining, :employment_type, :job_title, :designation_id,
+                :department_id, :initial_salary
   
   filter :id
   filter :last_name
@@ -19,13 +20,21 @@ ActiveAdmin.register Employee do
   end
 
   form do |f|
-    f.inputs do
+    f.inputs "Overview" do
       f.input :last_name
       f.input :first_name
       f.input :middle_name
       f.input :gender_id, as: :select, collection: Gender.all.collect { |g| [g.name, g.id] }
       f.input :birth_date, as: :datepicker
       f.input :marital_status, as: :select, collection: Employee.marital_statuses.invert
+    end
+    f.inputs "Joining" do
+      f.input :date_of_joining, as: :datepicker
+      f.input :employment_type
+      f.input :job_title
+      f.input :designation_id, as: :select, collection: Designation.all.collect { |d| [d.name, d.id] }, include_blank: true
+      f.input :department_id, as: :select, collection: Department.all.collect { |d| [d.name, d.id] }, include_blank: true
+      f.input :initial_salary
     end
     f.actions
   end
@@ -48,6 +57,18 @@ ActiveAdmin.register Employee do
           end
           row :created_at
           row :updated_at
+        end
+      end
+      tab "Joining" do
+        attributes_table title: nil do
+          row :date_of_joining
+          row :employment_type
+          row :job_title
+          row :designation
+          row :department
+            row :initial_salary do |employee|
+            number_to_currency(employee.initial_salary, unit: "₱", precision: 2)
+            end
         end
       end
     end
