@@ -2,7 +2,8 @@ ActiveAdmin.register Employee do
   menu priority: 2
   permit_params :first_name, :middle_name, :last_name, :gender_id, :birth_date, :is_deleted,
                 :marital_status, :date_of_joining, :employment_type, :job_title, :designation_id,
-                :department_id, :initial_salary
+                :department_id, :initial_salary, :mobile_number, :email_address, :company_email_address,
+                :current_address, :permament_address
   
   filter :id
   filter :last_name
@@ -44,6 +45,13 @@ ActiveAdmin.register Employee do
       f.input :department_id, as: :select, collection: Department.all.collect { |d| [d.name, d.id] }, include_blank: true
       f.input :initial_salary
     end
+    f.inputs "Address and Contacts" do
+      f.input :mobile_number
+      f.input :email_address
+      f.input :company_email_address
+      f.input :current_address
+      f.input :permament_address
+    end
     f.actions
   end
 
@@ -79,9 +87,18 @@ ActiveAdmin.register Employee do
             end
         end
       end
+      tab "Address and Contacts" do
+        attributes_table title: nil do
+          row :mobile_number
+          row :email_address
+          row :company_email_address
+          row :current_address
+          row :permament_address
+        end
+      end
     end
   end
-  
+
   member_action :destroy, method: :delete do
     resource.update(is_deleted: true)
     redirect_to admin_employees_path, notice: "Employee was successfully deleted."
