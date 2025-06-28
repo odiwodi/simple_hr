@@ -6,7 +6,8 @@ ActiveAdmin.register Employee do
                 :current_address, :permament_address, :assigned_shift_id, :attendance_device_id,
                 :is_overtime_eligible, :leave_approver_id,
                 emergency_contacts_attributes: [:id, :name, :phone_number, :relationship, :_destroy],
-                employee_families_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :contact_number, :_destroy]
+                employee_families_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :contact_number, :_destroy],
+                employee_dependents_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :dependent_type, :contact_number, :_destroy]
   
   filter :id
   filter :last_name
@@ -49,6 +50,14 @@ ActiveAdmin.register Employee do
       f.input :initial_salary
     end
     f.inputs "Personal Details" do
+      f.has_many :employee_dependents, allow_destroy: true, allow_new: true, heading: "Dependents" do |fd|
+        fd.input :full_name
+        fd.input :relationship, as: :select, collection: EmployeeDependent::RELATIONSHIP_OPTIONS, include_blank: true
+        fd.input :birth_date, as: :datepicker
+        fd.input :gender_id, as: :select, collection: Gender.all.collect { |g| [g.name, g.id] }
+        fd.input :dependent_type, as: :select, collection: EmployeeDependent::DEPENDENT_TYPE_OPTIONS, include_blank: true
+        fd.input :contact_number
+      end
       f.has_many :employee_families, allow_destroy: true, allow_new: true, heading: "Family Members" do |ff|
         ff.input :full_name
         ff.input :relationship, as: :select, collection: EmployeeFamily::RELATIONSHIP_OPTIONS, include_blank: true
@@ -112,6 +121,25 @@ ActiveAdmin.register Employee do
       end
       tab "Personal Details" do
         attributes_table title: nil do
+          row "Dependents" do |employee|
+            if employee.employee_dependents.any?
+              table_for employee.employee_dependents do
+                column :full_name
+                column :relationship
+                column :birth_date
+                column :age do |dependent|
+                  dependent.age
+                end
+                column :gender do |dependent|
+                  dependent.gender&.name
+                end
+                column :dependent_type
+                column :contact_number
+              end
+            else
+              span "No dependents available"
+            end
+          end
           row "Family Members" do |employee|
             if employee.employee_families.any?
               table_for employee.employee_families do

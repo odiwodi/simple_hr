@@ -6,11 +6,13 @@ class Employee < ApplicationRecord
   belongs_to :leave_approver, class_name: "Employee", optional: true
   belongs_to :assigned_shift, class_name: "Shift", optional: true
   has_many :employee_families
+  has_many :employee_dependents
 
   validates :first_name, :last_name, presence: true
   
   accepts_nested_attributes_for :emergency_contacts, allow_destroy: true
   accepts_nested_attributes_for :employee_families, allow_destroy: true
+  accepts_nested_attributes_for :employee_dependents, allow_destroy: true
 
   enum marital_status: {
     single: "Single",
