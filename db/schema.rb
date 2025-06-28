@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_065845) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_28_072011) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -75,6 +75,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_065845) do
     t.datetime "updated_at", null: false
     t.index ["job_level_id"], name: "index_employee_grades_on_job_level_id"
     t.index ["name"], name: "index_employee_grades_on_name", unique: true
+  end
+
+  create_table "employees", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "middle_name", null: false
+    t.string "last_name", null: false
+    t.bigint "gender_id", null: false
+    t.date "birth_date"
+    t.boolean "is_deleted", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["first_name"], name: "index_employees_on_first_name"
+    t.index ["gender_id"], name: "index_employees_on_gender_id"
+    t.index ["is_deleted"], name: "index_employees_on_is_deleted"
+    t.index ["last_name"], name: "index_employees_on_last_name"
+    t.index ["middle_name"], name: "index_employees_on_middle_name"
   end
 
   create_table "genders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -145,4 +161,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_065845) do
   add_foreign_key "designations", "departments"
   add_foreign_key "designations", "job_levels"
   add_foreign_key "employee_grades", "job_levels"
+  add_foreign_key "employees", "genders"
 end
