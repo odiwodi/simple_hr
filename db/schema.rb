@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_092953) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_28_095848) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -76,6 +76,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_092953) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["employee_id"], name: "index_emergency_contacts_on_employee_id"
+  end
+
+  create_table "employee_families", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "full_name"
+    t.string "relationship"
+    t.date "birth_date"
+    t.bigint "gender_id"
+    t.string "contact_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gender_id"], name: "index_employee_families_on_gender_id"
   end
 
   create_table "employee_grades", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -193,6 +204,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_092953) do
   add_foreign_key "designations", "departments"
   add_foreign_key "designations", "job_levels"
   add_foreign_key "emergency_contacts", "employees"
+  add_foreign_key "employee_families", "genders"
   add_foreign_key "employee_grades", "job_levels"
   add_foreign_key "employees", "departments"
   add_foreign_key "employees", "employees", column: "leave_approver_id"
