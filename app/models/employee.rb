@@ -2,6 +2,7 @@ class Employee < ApplicationRecord
   belongs_to :gender
   belongs_to :department
   belongs_to :designation
+  has_many :emergency_contacts
 
   validates :first_name, :last_name, presence: true
 
