@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_062102) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_28_065001) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -42,6 +42,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_062102) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_admin_users_on_role_id"
     t.index ["username"], name: "index_admin_users_on_username", unique: true
+  end
+
+  create_table "departments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.string "payroll_cost_center"
+    t.string "location"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_departments_on_code", unique: true
+    t.index ["name"], name: "index_departments_on_name", unique: true
   end
 
   create_table "employee_grades", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
