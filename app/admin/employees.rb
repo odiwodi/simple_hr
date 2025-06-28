@@ -81,5 +81,15 @@ ActiveAdmin.register Employee do
       end
     end
   end
+  
+  member_action :destroy, method: :delete do
+    resource.update(is_deleted: true)
+    redirect_to admin_employees_path, notice: "Employee was successfully deleted."
+  end
 
+  controller do
+    def scoped_collection
+      super.where(is_deleted: [false, nil])
+    end
+  end
 end
