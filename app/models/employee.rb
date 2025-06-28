@@ -13,11 +13,12 @@ class Employee < ApplicationRecord
   }
 
   def self.ransackable_attributes(auth_object = nil)
-    ["birth_date", "created_at", "first_name", "gender_id", "id", "id_value", "is_deleted", "last_name", "middle_name", "updated_at", "marital_status"]
+    ["birth_date", "created_at", "first_name", "gender_id", "id", "id_value", "is_deleted", "last_name",
+    "middle_name", "updated_at", "marital_status", "department_id", "job_title", "date_of_joining"]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["gender"]
+    ["gender", "department"]
   end
 
   def age

@@ -9,6 +9,14 @@ ActiveAdmin.register Employee do
   filter :first_name
   filter :middle_name
   filter :marital_status, as: :select, collection: Employee.marital_statuses.invert
+  filter :department, as: :select, collection: Department.all.collect { |d| [d.name, d.id] }
+  filter :job_title
+  filter :date_of_joining
+
+  scope :all, default: true
+  Department.all.each do |department|
+    scope(department.name) { |scope| scope.where(department_id: department.id) }
+  end
 
   index do
     selectable_column
