@@ -6,4 +6,8 @@ class JobLevel < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["created_at", "description", "id", "id_value", "level_rank", "position_code", "position_name", "updated_at"]
   end
+
+  def name
+    position_name
+  end
 end
