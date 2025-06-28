@@ -3,7 +3,8 @@ ActiveAdmin.register Employee do
   permit_params :first_name, :middle_name, :last_name, :gender_id, :birth_date, :is_deleted,
                 :marital_status, :date_of_joining, :employment_type, :job_title, :designation_id,
                 :department_id, :initial_salary, :mobile_number, :email_address, :company_email_address,
-                :current_address, :permament_address
+                :current_address, :permament_address,
+                emergency_contacts_attributes: [:id, :name, :phone_number, :relationship, :_destroy]
   
   filter :id
   filter :last_name
@@ -51,6 +52,11 @@ ActiveAdmin.register Employee do
       f.input :company_email_address
       f.input :current_address
       f.input :permament_address
+      f.has_many :emergency_contacts, allow_destroy: true, allow_new: true, heading: "Emergency Contacts" do |ec|
+        ec.input :name
+        ec.input :phone_number
+        ec.input :relationship, as: :select, collection: EmergencyContact::RELATIONSHIP_OPTIONS, include_blank: true
+      end
     end
     f.actions
   end
@@ -94,6 +100,17 @@ ActiveAdmin.register Employee do
           row :company_email_address
           row :current_address
           row :permament_address
+          row "Emergency Contacts" do |employee|
+            if employee.emergency_contacts.any?
+              table_for employee.emergency_contacts do
+              column :name
+              column :phone_number
+              column :relationship
+              end
+            else
+              span "No emergency contacts available"
+            end
+          end
         end
       end
     end

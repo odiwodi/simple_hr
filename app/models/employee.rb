@@ -5,6 +5,7 @@ class Employee < ApplicationRecord
   has_many :emergency_contacts
 
   validates :first_name, :last_name, presence: true
+  accepts_nested_attributes_for :emergency_contacts, allow_destroy: true
 
   enum marital_status: {
     single: "Single",
