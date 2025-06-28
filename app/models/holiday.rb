@@ -7,6 +7,7 @@ class Holiday < ApplicationRecord
 
   validates :name, presence: true
   validates :date, presence: true
+  validates :holiday_type, presence: true
 
   def self.ransackable_attributes(auth_object = nil)
     ["created_at", "date", "description", "holiday_type", "id", "id_value", "is_recurring", "name", "updated_at"]
