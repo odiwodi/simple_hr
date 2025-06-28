@@ -24,6 +24,10 @@ class Shift < ApplicationRecord
     (break_end_time - break_start_time) / 60 # duration in minutes
   end
 
+  def rest_days
+    DAYS_OF_WEEK - (working_days || [])
+  end
+
   private
 
   def remove_blank_working_days

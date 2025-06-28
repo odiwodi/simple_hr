@@ -53,6 +53,9 @@ ActiveAdmin.register Shift do
       end
       row :grace_period
       row :working_days
+      row(:rest_days) do |shift|
+        shift.rest_days.join(", ")
+      end
     end
   end
 end
