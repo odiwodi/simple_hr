@@ -10,4 +10,4 @@ config/database.yml
 .bash_history
 .irb_history
 .viminfo
-config/master.key
+/config/master.key
