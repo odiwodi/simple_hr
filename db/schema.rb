@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_082500) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_28_090540) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -93,6 +93,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_082500) do
     t.string "marital_status"
     t.bigint "department_id"
     t.decimal "initial_salary", precision: 12, scale: 2
+    t.string "mobile_number"
+    t.string "email_address"
+    t.string "company_email_address"
+    t.string "current_address"
+    t.string "permament_address"
     t.index ["date_of_joining"], name: "index_employees_on_date_of_joining"
     t.index ["department_id"], name: "index_employees_on_department_id"
     t.index ["designation_id"], name: "index_employees_on_designation_id"
