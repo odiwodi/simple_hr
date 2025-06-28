@@ -1,4 +1,6 @@
 class Shift < ApplicationRecord
+  has_many :employees, foreign_key: :assigned_shift_id, class_name: 'Employee'
+
   validates :name, presence: true, uniqueness: true
 
   before_save :remove_blank_working_days

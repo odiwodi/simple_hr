@@ -3,7 +3,8 @@ ActiveAdmin.register Employee do
   permit_params :first_name, :middle_name, :last_name, :gender_id, :birth_date, :is_deleted,
                 :marital_status, :date_of_joining, :employment_type, :job_title, :designation_id,
                 :department_id, :initial_salary, :mobile_number, :email_address, :company_email_address,
-                :current_address, :permament_address,
+                :current_address, :permament_address, :assigned_shift_id, :attendance_device_id,
+                :is_overtime_eligible, :leave_approver_id,
                 emergency_contacts_attributes: [:id, :name, :phone_number, :relationship, :_destroy]
   
   filter :id
@@ -58,6 +59,12 @@ ActiveAdmin.register Employee do
         ec.input :relationship, as: :select, collection: EmergencyContact::RELATIONSHIP_OPTIONS, include_blank: true
       end
     end
+    f.inputs "Attendance and Leaves" do
+      f.input :assigned_shift_id, as: :select, collection: Shift.all.collect { |s| [s.name, s.id] }, include_blank: true
+      f.input :attendance_device_id
+      f.input :is_overtime_eligible, as: :boolean
+      f.input :leave_approver_id, as: :select, collection: Employee.where.not(id: f.object.id).collect { |e| [e.last_first_name, e.id] }, include_blank: true
+    end
     f.actions
   end
 
@@ -109,6 +116,20 @@ ActiveAdmin.register Employee do
               end
             else
               span "No emergency contacts available"
+            end
+          end
+        end
+      end
+      tab "Attendance and Leaves" do
+        attributes_table title: nil do
+          row :assigned_shift do |employee|
+            employee.assigned_shift&.name
+          end
+          row :attendance_device_id
+          row :is_overtime_eligible
+          row :leave_approver do |employee|
+            if employee.leave_approver
+              link_to employee.leave_approver.last_first_name, admin_employee_path(employee.leave_approver)
             end
           end
         end

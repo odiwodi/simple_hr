@@ -3,8 +3,11 @@ class Employee < ApplicationRecord
   belongs_to :department
   belongs_to :designation
   has_many :emergency_contacts
+  belongs_to :leave_approver, class_name: "Employee", optional: true
+  belongs_to :assigned_shift, class_name: "Shift", optional: true
 
   validates :first_name, :last_name, presence: true
+  
   accepts_nested_attributes_for :emergency_contacts, allow_destroy: true
 
   enum marital_status: {
@@ -21,6 +24,10 @@ class Employee < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     ["gender", "department"]
+  end
+
+  def last_first_name
+    "#{last_name}, #{first_name}"
   end
 
   def age
