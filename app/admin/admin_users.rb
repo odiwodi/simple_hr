@@ -1,7 +1,6 @@
 ActiveAdmin.register AdminUser do
   menu parent: 'Configuration'
   permit_params :email, :password, :password_confirmation, :first_name, :middle_name, :last_name, :username, :role_id
-  actions :all, except: [:destroy]
 
   filter :email
   filter :username
@@ -74,6 +73,16 @@ ActiveAdmin.register AdminUser do
 
   action_item :edit_password, only: :show do
     link_to 'Change Password', edit_password_admin_admin_user_path(resource)
+  end
+
+  controller do
+    def destroy
+      if resource == current_admin_user
+        redirect_to admin_admin_users_path, alert: "You cannot delete your own account."
+      else
+        super
+      end
+    end
   end
 
 end
