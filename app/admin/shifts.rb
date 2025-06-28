@@ -1,6 +1,6 @@
 ActiveAdmin.register Shift do
   menu parent: "Configuration"
-  permit_params :name, :time_in, :time_out, :break_start_time, :break_end_time, :grace_period, :working_days
+  permit_params :name, :time_in, :time_out, :break_start_time, :break_end_time, :grace_period, working_days: []
   
   form do |f|
     f.inputs do
