@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_29_073246) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_29_150156) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -159,7 +159,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_29_073246) do
     t.string "last_name", null: false
     t.bigint "gender_id", null: false
     t.date "birth_date"
-    t.boolean "is_deleted", default: true, null: false
+    t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "date_of_joining"
