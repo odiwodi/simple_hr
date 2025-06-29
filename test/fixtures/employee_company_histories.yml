@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  branch: MyString
+  department: one
+  position: MyString
+  designation: one
+  start_date: 2025-06-29
+  end_date: 2025-06-29
+  employee: one
+
+two:
+  branch: MyString
+  department: two
+  position: MyString
+  designation: two
+  start_date: 2025-06-29
+  end_date: 2025-06-29
+  employee: two

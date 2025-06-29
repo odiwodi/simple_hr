@@ -9,12 +9,14 @@ class Employee < ApplicationRecord
   has_many :employee_dependents
   has_many :employee_educations
   has_many :employee_work_experiences
+  has_many :employee_company_histories
   
   accepts_nested_attributes_for :emergency_contacts, allow_destroy: true
   accepts_nested_attributes_for :employee_families, allow_destroy: true
   accepts_nested_attributes_for :employee_dependents, allow_destroy: true
   accepts_nested_attributes_for :employee_educations, allow_destroy: true
   accepts_nested_attributes_for :employee_work_experiences, allow_destroy: true
+  accepts_nested_attributes_for :employee_company_histories, allow_destroy: true
 
   enum marital_status: {
     single: "Single",
