@@ -20,6 +20,18 @@ class Employee < ApplicationRecord
     divorced: "Divorced",
     widowed: "Widowed"
   }
+  before_save :remove_blank_benefits
+
+  BENEFIT_OPTIONS = [
+    "Health Insurance",
+    "Dental Insurance",
+    "Vision Insurance",
+    "Retirement Plan",
+    "Paid Time Off",
+    "Life Insurance",
+    "Disability Insurance",
+    "Flexible Spending Account"
+  ].freeze
 
   def self.ransackable_attributes(auth_object = nil)
     ["birth_date", "created_at", "first_name", "gender_id", "id", "id_value", "is_deleted", "last_name",
@@ -40,5 +52,13 @@ class Employee < ApplicationRecord
     age = now.year - birth_date.year
     age -= 1 if now < birth_date + age.years
     age
+  end
+
+  private
+
+  def remove_blank_benefits
+    if self.benefits.is_a?(Array)
+      self.benefits = self.benefits.reject(&:blank?)
+    end
   end
 end

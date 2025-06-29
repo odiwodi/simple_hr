@@ -5,7 +5,7 @@ ActiveAdmin.register Employee do
                 :department_id, :initial_salary, :mobile_number, :email_address, :company_email_address,
                 :current_address, :permament_address, :assigned_shift_id, :attendance_device_id,
                 :is_overtime_eligible, :leave_approver_id, :family_background, :health_details, :insurance,
-                :payroll_cost_center, :salary_method,
+                :payroll_cost_center, :salary_method, benefits: [],
                 emergency_contacts_attributes: [:id, :name, :phone_number, :relationship, :_destroy],
                 employee_families_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :contact_number, :_destroy],
                 employee_dependents_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :dependent_type, :contact_number, :_destroy]
@@ -91,6 +91,9 @@ ActiveAdmin.register Employee do
     f.inputs "Salary" do
       f.input :payroll_cost_center
       f.input :salary_method
+    end
+    f.inputs "Benefits" do
+      f.input :benefits, as: :check_boxes, collection: Employee::BENEFIT_OPTIONS
     end
     f.actions
   end
@@ -209,6 +212,11 @@ ActiveAdmin.register Employee do
         attributes_table title: nil do
           row :payroll_cost_center
           row :salary_method
+        end
+      end
+      tab "Benefits" do
+        attributes_table title: nil do
+          row :benefits
         end
       end
     end
