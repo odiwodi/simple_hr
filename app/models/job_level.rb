@@ -7,6 +7,10 @@ class JobLevel < ApplicationRecord
     ["created_at", "description", "id", "id_value", "level_rank", "position_code", "position_name", "updated_at"]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    ["employee_grades"]
+  end
+
   def name
     position_name
   end
