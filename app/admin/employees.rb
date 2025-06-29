@@ -7,7 +7,7 @@ ActiveAdmin.register Employee do
                 :is_overtime_eligible, :leave_approver_id, :family_background, :health_details, :insurance,
                 :payroll_cost_center, :salary_method, :resignation_letter_date, :relieving_date,
                 :exit_interview_date, :new_workplace, :leave_encashed, :reason_for_leaving, :feedback,
-                benefits: [],
+                :skill_set, benefits: [],
                 emergency_contacts_attributes: [:id, :name, :phone_number, :relationship, :_destroy],
                 employee_families_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :contact_number, :_destroy],
                 employee_dependents_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :dependent_type, :contact_number, :_destroy],
@@ -56,6 +56,7 @@ ActiveAdmin.register Employee do
       f.input :initial_salary
     end
     f.inputs "Profile" do
+      f.input :skill_set
       f.has_many :employee_educations, allow_destroy: true, allow_new: true, heading: "Educations" do |fe|
         fe.input :school_name
         fe.input :qualification
@@ -169,6 +170,9 @@ ActiveAdmin.register Employee do
         end
       end
       tab "Profile" do
+        attributes_table title: nil do
+          row :skill_set
+        end
         panel "Educations" do
           if employee.employee_educations.any?
             table_for employee.employee_educations do
