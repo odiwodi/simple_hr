@@ -12,7 +12,8 @@ ActiveAdmin.register Employee do
                 employee_families_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :contact_number, :_destroy],
                 employee_dependents_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :dependent_type, :contact_number, :_destroy],
                 employee_educations_attributes: [:id, :school_name, :qualification, :degree_program, :level, :year_passing, :_destroy],
-                employee_work_experiences_attributes: [:id, :company_name, :position, :salary, :address, :years_of_service, :_destroy]
+                employee_work_experiences_attributes: [:id, :company_name, :position, :salary, :address, :years_of_service, :_destroy],
+                employee_company_histories_attributes: [:id, :branch, :department_id, :position, :designation_id, :start_date, :end_date, :_destroy]
   
   filter :id
   filter :last_name
@@ -68,6 +69,14 @@ ActiveAdmin.register Employee do
         fw.input :salary
         fw.input :address
         fw.input :years_of_service
+      end
+      f.has_many :employee_company_histories, allow_destroy: true, allow_new: true, heading: "History In Company" do |fh|
+        fh.input :branch
+        fh.input :department
+        fh.input :position
+        fh.input :designation
+        fh.input :start_date, as: :datepicker
+        fh.input :end_date, as: :datepicker
       end
     end
     f.inputs "Personal Details" do
@@ -186,6 +195,24 @@ ActiveAdmin.register Employee do
             end
           else
             span "No work experiences available"
+          end
+        end
+        panel "History In Company" do
+          if employee.employee_company_histories.any?
+            table_for employee.employee_company_histories do
+              column :branch
+              column :department do |history|
+                history.department&.name
+              end
+              column :position
+              column :designation do |history|
+                history.designation&.name
+              end
+              column :start_date
+              column :end_date
+            end
+          else
+            span "No company history available"
           end
         end
       end
