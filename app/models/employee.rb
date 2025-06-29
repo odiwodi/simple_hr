@@ -8,13 +8,13 @@ class Employee < ApplicationRecord
   has_many :employee_families
   has_many :employee_dependents
   has_many :employee_educations
-
-  validates :first_name, :last_name, presence: true
+  has_many :employee_work_experiences
   
   accepts_nested_attributes_for :emergency_contacts, allow_destroy: true
   accepts_nested_attributes_for :employee_families, allow_destroy: true
   accepts_nested_attributes_for :employee_dependents, allow_destroy: true
   accepts_nested_attributes_for :employee_educations, allow_destroy: true
+  accepts_nested_attributes_for :employee_work_experiences, allow_destroy: true
 
   enum marital_status: {
     single: "Single",
@@ -22,7 +22,6 @@ class Employee < ApplicationRecord
     divorced: "Divorced",
     widowed: "Widowed"
   }
-  before_save :remove_blank_benefits
 
   BENEFIT_OPTIONS = [
     "Health Insurance",
@@ -34,6 +33,9 @@ class Employee < ApplicationRecord
     "Disability Insurance",
     "Flexible Spending Account"
   ].freeze
+
+  before_save :remove_blank_benefits
+  validates :first_name, :last_name, presence: true
 
   def self.ransackable_attributes(auth_object = nil)
     ["birth_date", "created_at", "first_name", "gender_id", "id", "id_value", "is_deleted", "last_name",

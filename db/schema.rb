@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_29_070753) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_29_071658) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -124,6 +124,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_29_070753) do
     t.datetime "updated_at", null: false
     t.index ["job_level_id"], name: "index_employee_grades_on_job_level_id"
     t.index ["name"], name: "index_employee_grades_on_name", unique: true
+  end
+
+  create_table "employee_work_experiences", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "company_name", null: false
+    t.string "position", null: false
+    t.decimal "salary", precision: 12, scale: 2
+    t.string "address"
+    t.integer "years_of_service"
+    t.bigint "employee_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_employee_work_experiences_on_employee_id"
   end
 
   create_table "employees", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -251,6 +263,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_29_070753) do
   add_foreign_key "employee_families", "employees"
   add_foreign_key "employee_families", "genders"
   add_foreign_key "employee_grades", "job_levels"
+  add_foreign_key "employee_work_experiences", "employees"
   add_foreign_key "employees", "departments"
   add_foreign_key "employees", "employees", column: "leave_approver_id"
   add_foreign_key "employees", "genders"
