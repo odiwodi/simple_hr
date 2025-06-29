@@ -11,7 +11,8 @@ ActiveAdmin.register Employee do
                 emergency_contacts_attributes: [:id, :name, :phone_number, :relationship, :_destroy],
                 employee_families_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :contact_number, :_destroy],
                 employee_dependents_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :dependent_type, :contact_number, :_destroy],
-                employee_educations_attributes: [:id, :school_name, :qualification, :degree_program, :level, :year_passing, :_destroy]
+                employee_educations_attributes: [:id, :school_name, :qualification, :degree_program, :level, :year_passing, :_destroy],
+                employee_work_experiences_attributes: [:id, :company_name, :position, :salary, :address, :years_of_service, :_destroy]
   
   filter :id
   filter :last_name
@@ -60,6 +61,13 @@ ActiveAdmin.register Employee do
         fe.input :degree_program
         fe.input :level
         fe.input :year_passing, as: :number
+      end
+      f.has_many :employee_work_experiences, allow_destroy: true, allow_new: true, heading: "Work Experiences" do |fw|
+        fw.input :company_name
+        fw.input :position
+        fw.input :salary
+        fw.input :address
+        fw.input :years_of_service
       end
     end
     f.inputs "Personal Details" do
@@ -163,6 +171,21 @@ ActiveAdmin.register Employee do
             end
           else
             span "No educations available"
+          end
+        end
+        panel "Work Experiences" do
+          if employee.employee_work_experiences.any?
+            table_for employee.employee_work_experiences do
+              column :company_name
+              column :position
+              column :salary do |work_experience|
+                number_to_currency(work_experience.salary, unit: "₱", precision: 2)
+              end
+              column :address
+              column :years_of_service
+            end
+          else
+            span "No work experiences available"
           end
         end
       end
