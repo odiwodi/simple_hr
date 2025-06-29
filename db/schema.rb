@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_29_062519) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_29_064105) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -145,6 +145,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_29_062519) do
     t.string "payroll_cost_center"
     t.string "salary_method"
     t.json "benefits"
+    t.date "resignation_letter_date"
+    t.date "relieving_date"
+    t.date "exit_interview_date"
+    t.string "new_workplace"
+    t.boolean "leave_encashed"
+    t.text "reason_for_leaving"
+    t.text "feedback"
     t.index ["assigned_shift_id"], name: "index_employees_on_assigned_shift_id"
     t.index ["date_of_joining"], name: "index_employees_on_date_of_joining"
     t.index ["department_id"], name: "index_employees_on_department_id"

@@ -5,7 +5,9 @@ ActiveAdmin.register Employee do
                 :department_id, :initial_salary, :mobile_number, :email_address, :company_email_address,
                 :current_address, :permament_address, :assigned_shift_id, :attendance_device_id,
                 :is_overtime_eligible, :leave_approver_id, :family_background, :health_details, :insurance,
-                :payroll_cost_center, :salary_method, benefits: [],
+                :payroll_cost_center, :salary_method, :resignation_letter_date, :relieving_date,
+                :exit_interview_date, :new_workplace, :leave_encashed, :reason_for_leaving, :feedback,
+                benefits: [],
                 emergency_contacts_attributes: [:id, :name, :phone_number, :relationship, :_destroy],
                 employee_families_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :contact_number, :_destroy],
                 employee_dependents_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :dependent_type, :contact_number, :_destroy]
@@ -94,6 +96,15 @@ ActiveAdmin.register Employee do
     end
     f.inputs "Benefits" do
       f.input :benefits, as: :check_boxes, collection: Employee::BENEFIT_OPTIONS
+    end
+    f.inputs "Exit" do
+      f.input :resignation_letter_date, as: :datepicker
+      f.input :relieving_date, as: :datepicker
+      f.input :exit_interview_date, as: :datepicker
+      f.input :new_workplace
+      f.input :leave_encashed, as: :boolean, label: "Is leave encashed?"
+      f.input :reason_for_leaving, as: :text, input_html: { rows: 5 }
+      f.input :feedback, as: :text, input_html: { rows: 5 }
     end
     f.actions
   end
@@ -217,6 +228,19 @@ ActiveAdmin.register Employee do
       tab "Benefits" do
         attributes_table title: nil do
           row :benefits
+        end
+      end
+      tab "Exit" do
+        attributes_table title: nil do
+          row :resignation_letter_date
+          row :relieving_date
+          row :exit_interview_date
+          row :new_workplace
+          row :leave_encashed do |employee|
+            employee.leave_encashed ? "Yes" : "No"
+          end
+          row :reason_for_leaving
+          row :feedback
         end
       end
     end
