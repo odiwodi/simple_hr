@@ -10,7 +10,8 @@ ActiveAdmin.register Employee do
                 benefits: [],
                 emergency_contacts_attributes: [:id, :name, :phone_number, :relationship, :_destroy],
                 employee_families_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :contact_number, :_destroy],
-                employee_dependents_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :dependent_type, :contact_number, :_destroy]
+                employee_dependents_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :dependent_type, :contact_number, :_destroy],
+                employee_educations_attributes: [:id, :school_name, :qualification, :degree_program, :level, :year_passing, :_destroy]
   
   filter :id
   filter :last_name
@@ -51,6 +52,15 @@ ActiveAdmin.register Employee do
       f.input :designation_id, as: :select, collection: Designation.all.collect { |d| [d.name, d.id] }, include_blank: true
       f.input :department_id, as: :select, collection: Department.all.collect { |d| [d.name, d.id] }, include_blank: true
       f.input :initial_salary
+    end
+    f.inputs "Profile" do
+      f.has_many :employee_educations, allow_destroy: true, allow_new: true, heading: "Educations" do |fe|
+        fe.input :school_name
+        fe.input :qualification
+        fe.input :degree_program
+        fe.input :level
+        fe.input :year_passing, as: :number
+      end
     end
     f.inputs "Personal Details" do
       f.input :family_background, as: :text, input_html: { rows: 5 }
@@ -138,6 +148,21 @@ ActiveAdmin.register Employee do
           row :department
           row :initial_salary do |employee|
             number_to_currency(employee.initial_salary, unit: "₱", precision: 2)
+          end
+        end
+      end
+      tab "Profile" do
+        panel "Educations" do
+          if employee.employee_educations.any?
+            table_for employee.employee_educations do
+              column :school_name
+              column :qualification
+              column :degree_program
+              column :level
+              column :year_passing
+            end
+          else
+            span "No educations available"
           end
         end
       end
