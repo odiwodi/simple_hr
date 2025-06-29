@@ -4,7 +4,7 @@ ActiveAdmin.register Employee do
                 :marital_status, :date_of_joining, :employment_type, :job_title, :designation_id,
                 :department_id, :initial_salary, :mobile_number, :email_address, :company_email_address,
                 :current_address, :permament_address, :assigned_shift_id, :attendance_device_id,
-                :is_overtime_eligible, :leave_approver_id,
+                :is_overtime_eligible, :leave_approver_id, :family_background, :health_details, :insurance,
                 emergency_contacts_attributes: [:id, :name, :phone_number, :relationship, :_destroy],
                 employee_families_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :contact_number, :_destroy],
                 employee_dependents_attributes: [:id, :full_name, :relationship, :birth_date, :gender_id, :dependent_type, :contact_number, :_destroy]
@@ -50,6 +50,9 @@ ActiveAdmin.register Employee do
       f.input :initial_salary
     end
     f.inputs "Personal Details" do
+      f.input :family_background, as: :text, input_html: { rows: 5 }
+      f.input :health_details, as: :text, input_html: { rows: 5 }
+      f.input :insurance
       f.has_many :employee_dependents, allow_destroy: true, allow_new: true, heading: "Dependents" do |fd|
         fd.input :full_name
         fd.input :relationship, as: :select, collection: EmployeeDependent::RELATIONSHIP_OPTIONS, include_blank: true
@@ -121,6 +124,9 @@ ActiveAdmin.register Employee do
       end
       tab "Personal Details" do
         attributes_table title: nil do
+          row :family_background
+          row :health_details
+          row :insurance
           row "Dependents" do |employee|
             if employee.employee_dependents.any?
               table_for employee.employee_dependents do
