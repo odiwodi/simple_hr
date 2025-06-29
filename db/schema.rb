@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_29_064105) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_29_070753) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -90,6 +90,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_29_064105) do
     t.datetime "updated_at", null: false
     t.index ["employee_id"], name: "index_employee_dependents_on_employee_id"
     t.index ["gender_id"], name: "index_employee_dependents_on_gender_id"
+  end
+
+  create_table "employee_educations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "school_name"
+    t.string "qualification"
+    t.string "degree_program"
+    t.string "level"
+    t.integer "year_passing"
+    t.bigint "employee_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_employee_educations_on_employee_id"
   end
 
   create_table "employee_families", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -235,6 +247,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_29_064105) do
   add_foreign_key "emergency_contacts", "employees"
   add_foreign_key "employee_dependents", "employees"
   add_foreign_key "employee_dependents", "genders"
+  add_foreign_key "employee_educations", "employees"
   add_foreign_key "employee_families", "employees"
   add_foreign_key "employee_families", "genders"
   add_foreign_key "employee_grades", "job_levels"
